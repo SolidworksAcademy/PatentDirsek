@@ -39,19 +39,7 @@ namespace PatentDirsek
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SkirtWorker s = new SkirtWorker();
-
-            s.BasePlateOD = Convert.ToDouble(2000);
-            s.BasePlateID = Convert.ToDouble(1650);
-            s.BasePlateBoltCircleDia = Convert.ToDouble(1875);
-            s.BasePlateHoleNumber = Convert.ToDouble(24);
-            s.BasePlateHoleDia = Convert.ToDouble(34);
-            s.BasePlateThickness = Convert.ToDouble(25);
-
-            s.CreateBasePlate();
-        }
+       
 
         SldWorks swApp = new SldWorks();
         public AssemblyDoc swAssemblyDoc;
