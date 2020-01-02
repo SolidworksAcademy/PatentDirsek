@@ -13,7 +13,7 @@ namespace PatentDirsek
     {
         public double OutsideDiameter { get; set; } // Dış çap
         public double Thickness { get; set; } // Kalınlık
-        public double Radius { get; set; } // Yarıçap
+        public double Radius { get; set; } // Dirsek Radüsü
 
 
         public void CreateElbow90() // 90 Derecelik Patent Dirsek Çizen Metod
@@ -37,7 +37,7 @@ namespace PatentDirsek
             swModel = (ModelDoc2)SldWorks.ActiveDoc;
 
 
-            // Unsur ağacındaki plane lerin isimlerini değiştiriyorum. Değiştirmemin nedeni solidworks'ü başka bir dilde kullansam bile bu isimleri en başta istediğim isimlerle değiştirerek kod akışında yapacağım düzlem seçimlerinde verdiğim isimleri çağırabileceğim.(örn:48. satırda düzlem seçiyorum)
+            // Unsur ağacındaki düzlemlerin isimlerini değiştiriyorum. Değiştirmemin nedeni solidworks'ü başka bir dilde kullansam bile bu isimleri en başta istediğim isimlerle değiştirerek kod akışında yapacağım düzlem seçimlerinde verdiğim isimleri çağırabileceğim.(örn:48. satırda düzlem seçiyorum)
             swFeature = swModel.FeatureByPositionReverse(3); // SEÇİYORUM 
             swFeature.Name = "Front"; // DEĞİŞTİRİYORUM
 
@@ -63,11 +63,11 @@ namespace PatentDirsek
             boolstatus = swModel.Extension.SelectByID2("Front", "PLANE", 0, 0, 0, false, 0, null, 0); // Front Plane'i seçiyorum.
             swModel.SketchManager.InsertSketch(true); // Seçili Plane'e Sketch açıyorum.
 
-            // Daha sonra Sketch içerisine Bir daire çiziyorum (dirseğin radüsü)
+            // Sketch içerisine Bir daire çiziyorum (dirseğin radüsü)
             object ElbowSegment = null;
             ElbowSegment = swModel.CreateCircleByRadius2(0, 0, 0, Radius / 1000); // Burada radüs değerini 1000'e bölmemin nedeni solidworksün kod tarafında kullanılan değerleri metre olarak algılamasındandır. Ben değerlerimi kullanıcı arayüzünden milimetre olarak aldığım için kod tarafında tekrar metreye çevirmem gerekiyor.(Tabiki bu işlemleri kolaylaştırmak için bir metod kullanılabilir yada sınıflar içerisinde set edebilirsin.)
 
-            // Kodun buraya kadar olan kısmında unsur ağacının el alt kısmında olan, yani çizdiğim daireyi seçiyorum ve ismini SweepPath olarak değiştiriyorum.
+            // Unsur ağacının el altında olan sketch'i, yani çizdiğim daireyi seçiyorum ve ismini SweepPath olarak değiştiriyorum.
             swFeature = swModel.FeatureByPositionReverse(0);
             swFeature.Name = "SweepPath";
 
@@ -97,7 +97,7 @@ namespace PatentDirsek
             swModel.ClearSelection2(true);
 
             // çizdiğim sketch leri seçiyorum.
-            status = swModel.Extension.SelectByID2("SweepSection", "SKETCH", 0, 0, 0, true, 0, null, 0);
+            status = swModel.Extension.SelectByID2("SweepSection", "SKETCH", 0, 0, 0, false, 0, null, 0);
             status = swModel.Extension.SelectByID2("SweepPath", "SKETCH", 0, 0, 0, true, 0, null, 0);
 
             // Seçmiş olduğum sketchleri sweep(süpürerek katı oluştur) komutu ile katılıyorum
