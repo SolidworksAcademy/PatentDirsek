@@ -18,8 +18,8 @@ namespace PatentDirsek
 
         public void CreateElbow90() // 90 Derecelik Patent Dirsek Çizen Metod
         {
-            // TANIMLAMALAR
-            SldWorks SldWorks = new SldWorks();
+            // TANIMLAMALAR          
+            SldWorks swApp;
             Feature swFeature;
             bool boolstatus;
             bool status;
@@ -28,13 +28,15 @@ namespace PatentDirsek
             CustomPropertyManager cusPropMgr;
             int lRetVal;
 
+            //SldWorks Singleton
+            swApp = SwApplication.GetApplication();
 
             // Oluşturduğum DocumentManager sınıfındaki NewPartTeplate metodumu çalıştırarak yeni bir part dosyası açıyorum.
             DocumentManager.NewPartTemplate();
 
 
             // Yeni açtığım part dosyasını swModele set ediyorum
-            swModel = (ModelDoc2)SldWorks.ActiveDoc;
+            swModel = (ModelDoc2)swApp.ActiveDoc;
 
 
             // Unsur ağacındaki düzlemlerin isimlerini değiştiriyorum. Değiştirmemin nedeni solidworks'ü başka bir dilde kullansam bile bu isimleri en başta istediğim isimlerle değiştirerek kod akışında yapacağım düzlem seçimlerinde verdiğim isimleri çağırabileceğim.(örn:48. satırda düzlem seçiyorum)
@@ -67,6 +69,9 @@ namespace PatentDirsek
             object ElbowSegment = null;
             ElbowSegment = swModel.CreateCircleByRadius2(0, 0, 0, Radius / 1000); // Burada radüs değerini 1000'e bölmemin nedeni solidworksün kod tarafında kullanılan değerleri metre olarak algılamasındandır. Ben değerlerimi kullanıcı arayüzünden milimetre olarak aldığım için kod tarafında tekrar metreye çevirmem gerekiyor.(Tabiki bu işlemleri kolaylaştırmak için bir metod kullanılabilir yada sınıflar içerisinde set edebilirsin.)
 
+            // Daire ölçülendirmesi ekliyorum
+            swModel.AddDiameterDimension(0,0,0);
+
             // Unsur ağacının el altında olan sketch'i, yani çizdiğim daireyi seçiyorum ve ismini SweepPath olarak değiştiriyorum.
             swFeature = swModel.FeatureByPositionReverse(0);
             swFeature.Name = "SweepPath";
@@ -89,6 +94,7 @@ namespace PatentDirsek
             boolstatus = swModel.Extension.SelectByID2("Top", "PLANE", 0, 0, 0, false, 0, null, 0);
             swModel.SketchManager.InsertSketch(true);
             ElbowSegment = swModel.CreateCircleByRadius2(Radius / 1000, 0, 0, OutsideDiameter / 2000);
+            swModel.AddDiameterDimension(0,0,0);
             swModel.SketchManager.InsertSketch(true);
             swFeature = swModel.FeatureByPositionReverse(0);
             swFeature.Name = "SweepSection";

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
 
 namespace PatentDirsek
 {
@@ -12,9 +13,13 @@ namespace PatentDirsek
     {
         public static void NewPartTemplate() // Yeni bir part dökümanı açan metodum
         {
-            SldWorks SldWorks = new SldWorks();
-            ModelDoc2 swModel;
-            swModel = (ModelDoc2)SldWorks.NewDocument("C:\\ProgramData\\SOLIDWORKS\\SOLIDWORKS 2019\\templates\\Parça.prtdot", 0, 0, 0);
+            SldWorks swApp;
+            swApp = SwApplication.GetApplication();
+            string defaultPartTemplate;
+           
+            defaultPartTemplate = swApp.GetUserPreferenceStringValue((int)swUserPreferenceStringValue_e.swDefaultTemplatePart);
+            swApp.NewDocument(defaultPartTemplate, 0, 0, 0);
+
         }
     }
 }

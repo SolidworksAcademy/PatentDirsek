@@ -40,13 +40,13 @@
             // btn_CreateModel
             // 
             this.btn_CreateModel.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btn_CreateModel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_CreateModel.Location = new System.Drawing.Point(83, 196);
+            this.btn_CreateModel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btn_CreateModel.Location = new System.Drawing.Point(83, 213);
             this.btn_CreateModel.Margin = new System.Windows.Forms.Padding(2);
             this.btn_CreateModel.Name = "btn_CreateModel";
-            this.btn_CreateModel.Size = new System.Drawing.Size(171, 43);
+            this.btn_CreateModel.Size = new System.Drawing.Size(171, 36);
             this.btn_CreateModel.TabIndex = 0;
-            this.btn_CreateModel.Text = "Modeli Oluştur";
+            this.btn_CreateModel.Text = "Create Model";
             this.btn_CreateModel.UseVisualStyleBackColor = false;
             this.btn_CreateModel.Click += new System.EventHandler(this.btn_CreateModel_Click);
             // 
@@ -118,7 +118,8 @@
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
-            this.Text = "Harun Murat Özgüç";
+            this.Text = "Elbow";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
